@@ -10,6 +10,12 @@ def get_user(db: Session, id: int):
     return db.query(User).filter(User.id == id).first()
 
 
+async def get_user_async(db: AsyncSession, id: int):
+    query = select(User).where(User.id == id)
+    result = await db.execute(query)
+    return result.scalar_one_or_none()
+
+
 def get_user_by_email(db: Session, email: str):
     return db.query(User).filter(User.email == email).first()
 
